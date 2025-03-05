@@ -1,0 +1,28 @@
+spring:
+  datasource:
+    url: jdbc:mysql://206.238.179.229:3306/java_0225?useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&verifyServerCertificate=false&useSSL=false
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: java_0225
+    password: daErrB8dpdePJPdX
+  redis:
+    database: 7
+    host: 206.238.179.229
+    password: tAaRcKCyKFY4874z
+
+
+file:
+  path: D:\www\images
+
+
+logging:
+  level:
+    com.hm.stock.*: info
+
+# 开启币同步
+coin:
+  enable: false
+
+
+stock:
+  hk: false
+  cna: false

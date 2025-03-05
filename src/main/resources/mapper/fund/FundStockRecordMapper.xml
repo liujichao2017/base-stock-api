@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hm.stock.domain.fund.mapper.FundStockRecordMapper">
+
+    <select id="selectByPage" resultType="com.hm.stock.domain.fund.entity.FundStockRecord">
+        select
+        b.*,
+        f.name as fundName,
+        f.code as fundCode,
+        hk.sym as stockCode,
+        hk.type as stockType,
+        hk.desp as stockName
+        from fund_stock_record b
+        left join fund_lists f on b.fund_id = f.id
+        left join stock_hk_bearbull hk on hk.sym = b.`code`
+        <if test="ew.customSqlSegment != null">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

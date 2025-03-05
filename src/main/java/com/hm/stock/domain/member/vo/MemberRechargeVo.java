@@ -1,0 +1,19 @@
+package com.hm.stock.domain.member.vo;
+
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+
+import java.math.BigDecimal;
+
+@Data
+public class MemberRechargeVo {
+
+    @Schema(title = "市场ID")
+    @Parameter(description = "市场ID")
+    private Long marketId;
+
+    @Schema(title = "金额")
+    @Parameter(description = "金额")
+    private BigDecimal amt;
+}

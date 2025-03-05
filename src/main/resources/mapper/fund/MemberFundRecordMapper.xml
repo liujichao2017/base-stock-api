@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hm.stock.domain.fund.mapper.MemberFundRecordMapper">
+
+    <select id="selectByPage" resultType="com.hm.stock.domain.fund.vo.MemberFundRecordVo">
+        select
+        member_fund_record.id,
+        member_fund_record.market_id,
+        member_fund_record.fund_id,
+        fund_lists.`name` fund_name,
+        fund_lists.`code` fund_code,
+        fund_lists.`type` fund_type,
+        fund_lists.`cycle` cycle,
+        fund_lists.`interest_rate` interest_rate,
+        member_fund_record.member_id,
+        member_fund_record.amt,
+        member_fund_record.status,
+        member_fund_record.pass_time,
+        member_fund_record.sell_time,
+        member_fund_record.create_time,
+        member_fund_record.update_time
+        from member_fund_record
+        left join fund_lists on fund_lists.id = member_fund_record.fund_id
+        <if test="ew.customSqlSegment != null">
+            ${ew.customSqlSegment}
+        </if>
+    </select>
+</mapper>

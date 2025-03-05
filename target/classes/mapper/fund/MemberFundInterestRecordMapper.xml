@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hm.stock.domain.fund.mapper.MemberFundInterestRecordMapper">
+
+    <select id="selectLastByUserFundRecordIds"
+            resultType="com.hm.stock.domain.fund.entity.MemberFundInterestRecord">
+        select
+        user_fund_record_id,
+        max(compute_date) compute_date
+        from member_fund_interest_record
+        where user_fund_record_id in (
+        <foreach collection="fundRecordIds" item="recordId" separator=",">
+            #{recordId}
+        </foreach>
+        )
+        group by user_fund_record_id
+    </select>
+</mapper>

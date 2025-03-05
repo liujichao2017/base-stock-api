@@ -1,0 +1,73 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active: dev
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+  main:
+    allow-circular-references: true
+  jackson:
+    serialization:
+      write-dates-as-timestamps: true
+  messages:
+    basename: i18n/messages
+#  mvc:
+#    pathmatch:
+#      matching-strategy: ant_path_matcher
+file:
+  path: /www/images
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath*:/mapper/**/*.xml
+
+logging:
+  file:
+    path: ./logs
+
+
+url:
+  whitelist:
+    - /swagger**/**
+    - /webjars/**
+    - /v3/**
+    - /doc.html
+    - /app/register
+    - /app/login
+    - /app/logout
+    - /api/**
+    - /ws/**
+    - /favicon.ico
+    - /app/forgetPassword
+    - /app/stock/**
+    - /app/news/page
+    - /app/data/config/map
+    - /app/market/list
+
+springdoc:
+  api-docs:
+    enabled: true
+knife4j:
+  enable: true
+  setting:
+    language: ZH_CN
+    enable-swagger-models: true
+    enable-dynamic-parameter: false
+    footer-custom-content: "<strong>Copyright �? 2024 Keyidea. All Rights Reversed</strong>"
+    enable-footer-custom: true
+    enable-footer: true
+    enable-document-manage: true
+
+
+coin:
+  enable: false
+
+stock:
+  hk: false
+  cna: false
+
