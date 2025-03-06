@@ -90,7 +90,7 @@ public class MemberFundsServiceImpl extends ServiceImpl<MemberFundsMapper, Membe
             marketId = fundsOperateVo.getMarket().getId();
         }
 
-        MemberFunds memberFunds = getMemberFunds(memberId, marketId);
+        MemberFunds memberFunds = getMemberFunds(memberId, marketId, fundsOperateVo.getAccountType(),fundsOperateVo.getCurrencyType());
         int count = 0;
         BigDecimal amt = fundsOperateVo.getAmt();
         if (fundsOperateVo.isNegative()) {
@@ -166,7 +166,7 @@ public class MemberFundsServiceImpl extends ServiceImpl<MemberFundsMapper, Membe
         }
 
         BigDecimal amt = fundsOperateVo.getAmt();
-        MemberFunds memberFunds = getMemberFunds(memberId, marketId);
+        MemberFunds memberFunds = getMemberFunds(memberId, marketId, fundsOperateVo.getAccountType(), fundsOperateVo.getCurrencyType());
 
         // 增加体验金逻辑
         BigDecimal useExperienceAmt = queryExperienceAmt(fundsOperateVo);
@@ -421,16 +421,28 @@ public class MemberFundsServiceImpl extends ServiceImpl<MemberFundsMapper, Membe
         return memberFundsList;
     }
 
-    private MemberFunds getMemberFunds(Long memberId, Long marketId) {
+    private MemberFunds getMemberFunds(Long memberId, Long marketId, String accountType, String currencyType) {
         QueryWrapper<MemberFunds> ew = new QueryWrapper<>();
         ew.eq("member_id", memberId);
         ew.eq(LogicUtils.isNotNull(marketId), "market_id", marketId);
+        if (LogicUtils.isNotBlank(accountType)) {
+            ew.eq("account_type", accountType);
+        }
+        if (LogicUtils.isNotBlank(currencyType)) {
+            ew.eq("currency_type", currencyType);
+        }
+
         ew.last("limit 1");
         MemberFunds memberFunds = baseMapper.selectOne(ew);
         if (LogicUtils.isNull(memberFunds)) {
             return createMemberFunds(memberId, marketId);
         }
         return memberFunds;
+    }
+
+    // Overloaded method for backward compatibility
+    private MemberFunds getMemberFunds(Long memberId, Long marketId) {
+        return getMemberFunds(memberId, marketId, null, null);
     }
 
     private MemberFunds createMemberFunds(Long memberId, Long marketId) {

@@ -9,6 +9,7 @@ import com.hm.stock.domain.member.vo.FundConvertVo;
 import com.hm.stock.domain.member.vo.MemberRealVo;
 import com.hm.stock.domain.member.vo.MemberVo;
 import com.hm.stock.domain.stock.entity.Stock;
+import com.hm.stock.domain.stock.vo.MemberPositionStatVo;
 import com.hm.stock.modules.common.PageDate;
 import com.hm.stock.modules.common.PageParam;
 
@@ -30,4 +31,6 @@ public interface MemberService extends IService<Member> {
     PageDate<MemberFundsLogs> fundsList(MemberFundsLogs query, PageParam page);
 
     void memberChange(Long memberId);
+
+    MemberPositionStatVo getMemberPositionStat(Long memberId);
 }

@@ -44,7 +44,12 @@ public class MemberRechargeServiceImpl extends ServiceImpl<MemberRechargeMapper,
         memberRecharge.setActualAmt(body.getAmt());
         memberRecharge.setFee(new BigDecimal("0"));
         memberRecharge.setStatus(status);
+        //设置不同的充值信息
+        memberRecharge.setAccountType(body.getAccountType());
+        memberRecharge.setCurrencyType(body.getCurrencyType());
+
         LogicUtils.assertTrue(save(memberRecharge), ErrorResultCode.E000001);
         return memberRecharge;
     }
+
 }

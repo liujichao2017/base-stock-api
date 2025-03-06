@@ -86,4 +86,12 @@ public class MemberWithdraw extends BaseEntity {
     @Parameter(description = "预留字段,根据项目需要使用")
     private String bank8;
 
+    @Schema(title = "货币类型")
+    @Parameter(description = "货币类型")
+    private String currencyType;
+
+    @Schema(title = "账号类型")
+    @Parameter(description = "账号类型")
+    private String accountType;
+
 }

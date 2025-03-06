@@ -55,13 +55,13 @@ public class MemberRecharge extends BaseEntity {
     private Date approvalTime;
 
     //新增字段账户类型
-//    @Schema(title = "账户类型")
-//    @Parameter(description = "账户类型，NORMAL/QUANTIFICATION")
-//    private String accountType;
-//
-//
+    @Schema(title = "账户类型")
+    @Parameter(description = "账户类型，NORMAL/QUANTIFICATION")
+    private String accountType;
+
+
     //新增字段货币类型
-//    @Schema(title = "货币类型")
-//    @Parameter(description = "货币类型")
-//    private String currencyType;
+    @Schema(title = "货币类型")
+    @Parameter(description = "货币类型")
+    private String currencyType;
 }

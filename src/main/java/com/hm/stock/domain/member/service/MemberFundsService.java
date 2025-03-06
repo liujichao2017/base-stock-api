@@ -62,5 +62,10 @@ public interface MemberFundsService extends IService<MemberFunds> {
 
     MemberFunds getFundsRecord(Market market, Member member);
 
+    /**
+     * 查询用户
+     * @param member
+     * @return
+     */
     List<MemberFunds> getFundsRecords(Member member);
 }

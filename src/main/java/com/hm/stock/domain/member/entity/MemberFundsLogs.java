@@ -69,4 +69,8 @@ public class MemberFundsLogs extends BaseEntity {
     @Parameter(description = "操作的内容存放JSON,根据交易的名称,产品代码,等信息拼接JSON, 用于前端展示, 标准格式定义 name code ")
     private String contentJson;
 
+    @Schema(title = "货币类型")
+    @Parameter(description = "货币类型")
+    private String currencyType;
+
 }

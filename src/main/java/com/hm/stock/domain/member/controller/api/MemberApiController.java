@@ -7,6 +7,7 @@ import com.hm.stock.domain.member.vo.FundConvertVo;
 import com.hm.stock.domain.member.vo.MemberRealVo;
 import com.hm.stock.domain.member.vo.MemberVo;
 import com.hm.stock.domain.stock.entity.Stock;
+import com.hm.stock.domain.stock.vo.MemberPositionStatVo;
 import com.hm.stock.modules.common.PageDate;
 import com.hm.stock.modules.common.PageParam;
 import com.hm.stock.modules.common.Result;
@@ -32,5 +33,12 @@ public class MemberApiController {
     public Result<Stock> memberChange(@PathVariable("id") Long memberId) {
         service.memberChange(memberId);
         return Result.ok();
+    }
+
+    @GetMapping("/position/{id}")
+    @Operation(summary = "查询会员量化资金信息")
+    public Result<MemberPositionStatVo> getMemberPositionStat(@PathVariable("id") Long memberId) {
+        MemberPositionStatVo memberPositionStatVo = service.getMemberPositionStat(memberId);
+        return Result.ok(memberPositionStatVo);
     }
 }

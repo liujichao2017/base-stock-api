@@ -37,10 +37,4 @@ public class MemberRechargeAppController {
         return Result.ok(service.add(body));
     }
 
-    @PostMapping("/in")
-    @Operation(summary = "提交量化充值单")
-    public Result<Long> add(@RequestBody MemberRechargeVo body) {
-        return Result.ok(service.add(body));
-    }
-
 }

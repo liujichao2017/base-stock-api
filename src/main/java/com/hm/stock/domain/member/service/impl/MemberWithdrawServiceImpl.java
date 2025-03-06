@@ -116,6 +116,11 @@ public class MemberWithdrawServiceImpl extends ServiceImpl<MemberWithdrawMapper,
         memberWithdraw.setActualAmt(body.getAmt());
         memberWithdraw.setFee(new BigDecimal("0"));
         memberWithdraw.setStatus("0");
+
+        //设置不同的提现信息
+        memberWithdraw.setAccountType(body.getAccountType());
+        memberWithdraw.setCurrencyType(body.getCurrencyType());
+
         LogicUtils.assertTrue(save(memberWithdraw), ErrorResultCode.E000001);
 
         FundsOperateVo fundsOperateVo = new FundsOperateVo();
@@ -125,6 +130,10 @@ public class MemberWithdrawServiceImpl extends ServiceImpl<MemberWithdrawMapper,
         fundsOperateVo.setAmt(body.getAmt());
         fundsOperateVo.setMarketId(body.getMarketId());
         fundsOperateVo.setSourceId(memberWithdraw.getId());
+
+        fundsOperateVo.setAccountType(body.getAccountType());
+        fundsOperateVo.setCurrencyType(body.getCurrencyType());
+
         memberFundsService.subEnableAmt(fundsOperateVo);
 
         return memberWithdraw.getId();

@@ -40,4 +40,12 @@ public class MemberFunds extends BaseEntity {
     @Parameter(description = "盈利金额: 购买产品结算后, 获得的收益")
     private BigDecimal profitAmt;
 
+    @Schema(title = "货币类型")
+    @Parameter(description = "货币类型")
+    private String currencyType;
+
+    @Schema(title = "账号类型")
+    @Parameter(description = "账号类型")
+    private String accountType;
+
 }

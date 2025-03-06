@@ -31,7 +31,10 @@ import com.hm.stock.domain.member.vo.*;
 import com.hm.stock.domain.message.service.MemberMessageService;
 import com.hm.stock.domain.site.entity.SysUser;
 import com.hm.stock.domain.site.mapper.SysUserMapper;
+import com.hm.stock.domain.stock.entity.MemberPosition;
+import com.hm.stock.domain.stock.mapper.MemberPositionMapper;
 import com.hm.stock.domain.stock.service.MemberPositionService;
+import com.hm.stock.domain.stock.vo.MemberPositionStatVo;
 import com.hm.stock.domain.stock.vo.MemberPositionVo;
 import com.hm.stock.domain.ws.entity.WsMember;
 import com.hm.stock.domain.ws.handler.SocketSessionManage;
@@ -67,6 +70,10 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
     private MemberFundsMapper memberFundsMapper;
     @Autowired
     private MarketMapper marketMapper;
+
+    @Autowired
+    private MemberPositionMapper memberPositionMapper;
+
     @Autowired
     private MemberFundsLogsMapper memberFundsLogsMapper;
     @Autowired
@@ -248,6 +255,50 @@ public class MemberServiceImpl extends ServiceImpl<MemberMapper, Member> impleme
         wsMember.setMember(member);
         wsMember.setUnreadMsg(memberMessageService.countUnread(member.getId()));
         socketSessionManage.send(memberId, wsMember);
+    }
+
+    @Override
+    public MemberPositionStatVo getMemberPositionStat(Long memberId) {
+        MemberPositionStatVo memberPositionStatVo = new MemberPositionStatVo();
+        
+        // Initialize all amounts to zero
+        memberPositionStatVo.setQuantificationSum(BigDecimal.ZERO);
+        memberPositionStatVo.setEnableSum(BigDecimal.ZERO);
+        memberPositionStatVo.setOccupancySum(BigDecimal.ZERO);
+        memberPositionStatVo.setProfitSum(BigDecimal.ZERO);
+        memberPositionStatVo.setFloatingProfitSum(BigDecimal.ZERO);
+
+        // Query member funds
+        QueryWrapper<MemberFunds> fundsEw = new QueryWrapper<>();
+        // 根据memberId查询，此处忽略了货币类型的查询,假定都是美元
+        String currencyType = "us";
+        fundsEw.eq("member_id", memberId);
+        fundsEw.eq("currency_type",currencyType);
+        List<MemberFunds> memberFunds = memberFundsMapper.selectList(fundsEw);
+        
+        // Calculate total funds and available funds
+        for (MemberFunds funds : memberFunds) {
+            if("QUANTIFICATION".equals(funds.getAccountType())){
+                memberPositionStatVo.setQuantificationSum(memberPositionStatVo.getQuantificationSum()
+                .add(funds.getEnableAmt())
+                .add(funds.getOccupancyAmt())
+                .add(funds.getFreezeAmt())
+                );
+
+                memberPositionStatVo.setEnableSum(memberPositionStatVo.getEnableSum().add(funds.getEnableAmt()));
+                memberPositionStatVo.setOccupancySum(memberPositionStatVo.getOccupancySum().add(funds.getOccupancyAmt()));
+                memberPositionStatVo.setProfitSum(memberPositionStatVo.getProfitSum().add(funds.getProfitAmt()));
+            }
+            
+        }
+
+        // 计算浮动利润 
+        BigDecimal floatingProfit = memberPositionMapper.selectFloatingProfit(memberId);
+        memberPositionStatVo.setFloatingProfitSum(floatingProfit);
+
+
+
+        return memberPositionStatVo;
     }
 
     /**

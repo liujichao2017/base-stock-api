@@ -19,4 +19,13 @@ public class MemberWithdrawVo {
     @Schema(title = "提现密码")
     @Parameter(description = "提现密码")
     private String withPwd;
+
+    //增加了两个参数，货币类型和账户类型
+    @Schema(title = "货币类型")
+    @Parameter(description = "货币类型")
+    private String currencyType;
+
+    @Schema(title = "账号类型")
+    @Parameter(description = "账号类型")
+    private String accountType;
 }

@@ -276,6 +276,9 @@ public class MemberPositionServiceImpl extends ServiceImpl<MemberPositionMapper,
                 .set(FundsOperateVo.FundsInfoKey.FEE_AMT,
                      memberPosition.getProfitAndLose().subtract(memberPosition.getAllProfitAndLose()))
                 .build();
+
+        fundsOperateVo.setAccountType(memberPosition.getPositionType());
+        fundsOperateVo.setCurrencyType(memberPosition.getCurrencyType());
         memberFundsService.subOccupancyAmt(fundsOperateVo);
 
         fundsOperateVo = new FundsOperateVo();

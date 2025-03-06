@@ -65,6 +65,14 @@ public class FundsOperateVo {
     @Parameter(description = "会员可见 see YNEnum, 0: 否(后台上下分). 1: 是(其他)")
     private String visible;
 
+    @Schema(title = "货币类型")
+    @Parameter(description = "货币类型")
+    private String currencyType;
+
+    @Schema(title = "账号类型")
+    @Parameter(description = "账号类型")
+    private String accountType;
+
     public FundsOperateVo set(String key, Object value) {
         this.fundsInfoMap.put(key, value);
         return this;

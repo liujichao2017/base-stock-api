@@ -118,4 +118,18 @@ public class MemberPosition extends BaseEntity {
     @Parameter(description = "平仓时间限制")
     private Date sellTimeLimit;
 
+    /**
+     * 持仓类型  1普通持仓  2-量化交易
+     */
+    @Schema(title = "持仓类型  1普通持仓  2-量化交易")
+    @Parameter(description = "持仓类型  1普通持仓  2-量化交易")
+    private String positionType;
+
+    /**
+     * 货币类型
+     */
+    @Schema(title = "货币类型")
+    @Parameter(description = "货币类型")
+    private String currencyType;
+
 }
